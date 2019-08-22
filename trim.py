@@ -17,6 +17,10 @@ def trim_image(in_file, out_file):
     image = Image.open(in_file)
     size = image.size
     bbox = image.convert("RGBa").getbbox()
+    if bbox == None:
+        image.save(out_file)
+        return (0, 0)
+
     offset_x = (float(bbox[2]) + float(bbox[0])) * 0.5 - float(size[0]) * 0.5
     offset_y = -(float(bbox[3]) + float(bbox[1])) * 0.5 + float(size[1]) * 0.5
     image.crop(bbox).save(out_file)
